@@ -24,6 +24,7 @@ pipeline {
                     ansiblePlaybook(
                         playbook: 'build-push.yml',
                         inventory: '/etc/ansible/hosts',
+                        credentialsId: 'worker-ssh-key',
                         extraVars: [
                             docker_repo: "${DOCKER_HUB_REPO}",
                             tag: "${IMAGE_TAG}",
