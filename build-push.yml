@@ -43,6 +43,13 @@
           path: "{{ build_dir }}"
         state: present
 
+    - name: Tag the build as 'latest'
+      community.docker.docker_image:
+        name: "{{ repo_name }}:{{ image_tag }}"
+        repository: "{{ repo_name }}:latest"
+        state: present
+        source: local
+
     - name: Log into Docker Hub
       community.docker.docker_login:
         username: "{{ docker_user }}"
