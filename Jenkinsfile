@@ -26,10 +26,10 @@ pipeline {
                         inventory: '/etc/ansible/hosts',
                         credentialsId: 'worker-ssh-key',
                         extraVars: [
-                            docker_repo: "${DOCKER_HUB_REPO}",
-                            tag: "${IMAGE_TAG}",
-                            d_user: "${D_USER}",
-                            d_pass: "${D_PASS}"
+                            docker_repo: '${DOCKER_HUB_REPO}',
+                            tag: '${IMAGE_TAG}',
+                            d_user: '${D_USER}',
+                            d_pass: '${D_PASS}'
                         ]
                     )
                 }
