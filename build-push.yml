@@ -11,6 +11,11 @@
     build_dir: "/tmp/docker_build"
 
   tasks:
+    - name: Clean up all old versions of this app before building
+      shell: |
+         docker images "{{ repo_name }}" -q | xargs -r docker rmi -f
+      ignore_errors: yes
+
     - name: Clean up build directory from previous runs
       file:
         path: "{{ build_dir }}"
