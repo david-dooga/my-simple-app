@@ -11,6 +11,18 @@
     build_dir: "/tmp/docker_build"
 
   tasks:
+    - name: Clean up build directory from previous runs
+      file:
+        path: "{{ build_dir }}"
+        state: absent
+
+    - name: Remove old version of the image from worker (if exists)
+      community.docker.docker_image:
+        name: "{{ repo_name }}"
+        tag: "{{ image_tag }}"
+        state: absent
+      ignore_errors: yes # Don't fail if the image isn't there yet
+
     - name: Create build directory on remote node
       file:
         path: "{{ build_dir }}"
@@ -39,9 +51,12 @@
     - name: Push Image to Docker Hub
       community.docker.docker_image:
         name: "{{ repo_name }}"
-        tag: "{{ image_tag }}"
+        tag: "{{ item }}"
         push: yes
         source: local
+      loop:
+        - "{{ image_tag }}"
+        - "latest"
 
    # - name: Cleanup build directory
     #  file:
